@@ -1,12 +1,6 @@
 package com.dcalabrese22.dan.maxpassusage;
 
-import android.util.Log;
-
 import com.dcalabrese22.dan.maxpassusage.database.DbOperations;
-
-import java.nio.channels.SelectionKey;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dan on 12/19/17.
@@ -115,12 +109,13 @@ public class ResortsBuilder {
     }
 
     public void createSkiAreas() {
-        List<SkiArea> skiAreas = new ArrayList<>();
         for (int i = 0; i < resorts.length; i++) {
             SkiArea skiArea = new SkiArea(resorts[i], coordinates[i][0], coordinates[i][1], 0);
-            skiAreas.add(skiArea);
             mOperator.insertSkiArea(skiArea);
-            Log.d("Inserted:", skiArea.getResortName());
         }
+    }
+
+    public static String[] getResortNames() {
+        return resorts;
     }
 }

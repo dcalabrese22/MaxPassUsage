@@ -12,7 +12,7 @@ import android.util.Log;
 public class DbHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "maxpassusage.db";
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
 
     public DbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -23,7 +23,7 @@ public class DbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_SKI_AREA_TABLE =
                 "Create Table " + DbContract.SkiAreaEntry.SKI_AREA_TABLE + " (" +
                         DbContract.SkiAreaEntry._ID + " Integer Primary Key AutoIncrement, " +
-                        DbContract.SkiAreaEntry.SKI_AREA_COLUMN_NAME + " Text Not Null, " +
+                        DbContract.SkiAreaEntry.SKI_AREA_COLUMN_NAME + " Text Not Null Unique, " +
                         DbContract.SkiAreaEntry.SKI_AREA_COLUMN_LATITUDE + "  Real Not Null, " +
                         DbContract.SkiAreaEntry.SKI_AREA_COLUMN_LONGITUDE + " Real Not Null, " +
                         DbContract.SkiAreaEntry.SKI_AREA_COLUMN_TIMES_GONE + " Integer Not Null" +

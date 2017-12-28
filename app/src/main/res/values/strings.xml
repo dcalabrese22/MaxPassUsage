@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MaxPassUsage</string>
+    <string name="times_used">Passes Used</string>
 </resources>
