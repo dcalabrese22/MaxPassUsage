@@ -31,31 +31,44 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_below="@id/tv_passes_used_text">
+        android:layout_below="@id/tv_passes_used_text"
+        android:id="@+id/layout_for_counter">
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_remove_white_24px"
-            android:layout_marginEnd="10dp" />
+            android:layout_marginEnd="10dp"
+            android:id="@+id/minus_one"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="50sp"
             android:layout_gravity="center_vertical"
-            android:text="0"
-            android:id="@+id/tv_passes_used"/>
+            android:id="@+id/tv_passes_used" />
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_add_white_24px"
-            android:layout_marginStart="10dp" />
+            android:layout_marginStart="10dp"
+            android:id="@+id/plus_one"/>
 
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="@string/navigate"
+        android:textAllCaps="false"
+        android:textColor="#0645AD"
+        android:layout_marginTop="100dp"
+        android:layout_below="@id/layout_for_counter"
+        android:id="@+id/btn_navigate"/>
 
 </RelativeLayout>

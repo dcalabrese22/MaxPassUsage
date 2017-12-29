@@ -59,5 +59,6 @@ public class MainActivity extends AppCompatActivity implements SkiAreaClickHandl
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra(EXTRA_SKI_AREA_NAME, area);
         startActivity(intent);
+        mSearchView.setQuery("", true);
     }
 }
