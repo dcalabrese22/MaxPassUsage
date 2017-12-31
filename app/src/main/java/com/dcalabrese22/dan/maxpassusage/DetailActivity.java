@@ -26,6 +26,7 @@ public class DetailActivity extends AppCompatActivity {
     private String mName;
     private Context mContext;
     private Button mStartNav;
+    private Button mMountainInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class DetailActivity extends AppCompatActivity {
         mPlus = findViewById(R.id.plus_one);
         mMinus = findViewById(R.id.minus_one);
         mStartNav = findViewById(R.id.btn_navigate);
+        mMountainInfo = findViewById(R.id.btn_mountain_info);
 
         mHeader.setText(mName);
         mOperator = new DbOperations(this);
@@ -91,9 +93,20 @@ public class DetailActivity extends AppCompatActivity {
                 double[] coords = mOperator.getLatAndLong(mName);
                 String lat = String.valueOf(coords[0]);
                 String lon = String.valueOf(coords[1]);
-                Uri uri = Uri.parse("google.navigation:q=l" + lat + "," + lon);
+//                Uri uri = Uri.parse("google.navigation:q=" + lat + "," + lon);
+                Uri uri = Uri.parse("google.navigation:q=" + mName);
+                Log.d("uri", uri.toString());
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
+            }
+        });
+
+        mMountainInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://www.google.com/#q=" + mName);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
         });

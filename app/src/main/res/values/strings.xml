@@ -3,4 +3,7 @@
     <string name="times_used">Passes Used</string>
     <string name="navigate">Navigate to mountain</string>
     <string name="not_more_than_5">You only have 5 passes</string>
+    <string name="mountain_information">Mountain information</string>
+    <string name="total_passes_used">Total Passes Used:</string>
+    <string name="first_time">first_time</string>
 </resources>

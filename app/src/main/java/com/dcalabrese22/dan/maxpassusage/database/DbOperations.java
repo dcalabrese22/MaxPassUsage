@@ -67,4 +67,14 @@ public class DbOperations {
         double[] coords = {lat, longitude};
         return coords;
     }
+
+    public int getTotalPassesUsed() {
+        String query = "Select SUM(" + DbContract.SkiAreaEntry.SKI_AREA_COLUMN_TIMES_GONE +
+                ") FROM " + DbContract.SkiAreaEntry.SKI_AREA_TABLE + ";";
+        Cursor cursor = mDatabase.rawQuery(query, null);
+        cursor.moveToNext();
+        int total = cursor.getInt(0);
+        cursor.close();
+        return total;
+    }
 }
