@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true"
     android:layout_marginTop="10dp"
-    tools:context="com.dcalabrese22.dan.maxpassusage.MainActivity">
+    tools:context="com.dcalabrese22.dan.skipassusage.MainActivity">
 
     <android.support.v7.widget.SearchView
         android:layout_width="match_parent"

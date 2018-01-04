@@ -1,6 +1,6 @@
-package com.dcalabrese22.dan.maxpassusage;
+package com.dcalabrese22.dan.skipassusage;
 
-import com.dcalabrese22.dan.maxpassusage.database.DbOperations;
+import com.dcalabrese22.dan.skipassusage.database.DbOperations;
 
 /**
  * Created by dan on 12/19/17.
@@ -40,7 +40,7 @@ public class ResortsBuilder {
             "Mount Sunapee",
             "Okemo",
             "Pico Mountain",
-            "The Summit as Snoqualmie",
+            "The Summit at Snoqualmie",
             "Snowshoe",
             "Solitude",
             "Steamboat",

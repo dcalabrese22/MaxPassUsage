@@ -1,20 +1,17 @@
-package com.dcalabrese22.dan.maxpassusage;
+package com.dcalabrese22.dan.skipassusage;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.dcalabrese22.dan.maxpassusage.database.DbOperations;
+import com.dcalabrese22.dan.skipassusage.database.DbOperations;
 
 public class MainActivity extends AppCompatActivity implements SkiAreaClickHandler{
 
@@ -23,11 +20,13 @@ public class MainActivity extends AppCompatActivity implements SkiAreaClickHandl
     private SearchView mSearchView;
     private TextView mTotalPassesUsed;
     private DbOperations mOperator;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContext = this;
 
         mOperator = new DbOperations(this);
         SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
@@ -48,6 +47,14 @@ public class MainActivity extends AppCompatActivity implements SkiAreaClickHandl
         mTotalPassesUsed = findViewById(R.id.tv_total_passes_used);
 
         mTotalPassesUsed.setText(String.valueOf(mOperator.getTotalPassesUsed()));
+
+        mTotalPassesUsed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, PassesUsedActivity.class);
+                startActivity(intent);
+            }
+        });
 
         mSearchView.setOnClickListener(new View.OnClickListener() {
             @Override

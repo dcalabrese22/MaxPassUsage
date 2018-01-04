@@ -1,4 +1,4 @@
-package com.dcalabrese22.dan.maxpassusage;
+package com.dcalabrese22.dan.skipassusage;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dcalabrese22.dan.maxpassusage.database.DbContract;
-import com.dcalabrese22.dan.maxpassusage.database.DbOperations;
+import com.dcalabrese22.dan.skipassusage.database.DbContract;
+import com.dcalabrese22.dan.skipassusage.database.DbOperations;
 
 public class DetailActivity extends AppCompatActivity {
 

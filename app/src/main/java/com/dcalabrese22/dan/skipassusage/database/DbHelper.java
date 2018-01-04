@@ -1,4 +1,4 @@
-package com.dcalabrese22.dan.maxpassusage.database;
+package com.dcalabrese22.dan.skipassusage.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

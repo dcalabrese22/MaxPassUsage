@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dcalabrese22.dan.maxpassusage">
+    package="com.dcalabrese22.dan.skipassusage">
 
     <application
         android:name=".database.DbApplication"
@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".PassesUsedActivity"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.dcalabrese22.dan.maxpassusage;
+package com.dcalabrese22.dan.skipassusage;
 
 /**
  * Created by dcalabrese on 12/28/2017.

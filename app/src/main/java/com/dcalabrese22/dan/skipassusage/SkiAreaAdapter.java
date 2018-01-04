@@ -1,4 +1,4 @@
-package com.dcalabrese22.dan.maxpassusage;
+package com.dcalabrese22.dan.skipassusage;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

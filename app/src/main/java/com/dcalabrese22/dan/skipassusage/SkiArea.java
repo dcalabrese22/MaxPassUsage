@@ -1,4 +1,4 @@
-package com.dcalabrese22.dan.maxpassusage;
+package com.dcalabrese22.dan.skipassusage;
 
 /**
  * Created by dan on 12/19/17.
@@ -15,6 +15,11 @@ public class SkiArea {
         this.resortName = resortName;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.timesGone = timesGone;
+    }
+
+    public SkiArea(String resortName, int timesGone) {
+        this.resortName = resortName;
         this.timesGone = timesGone;
     }
 

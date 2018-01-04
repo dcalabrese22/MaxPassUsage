@@ -1,11 +1,11 @@
-package com.dcalabrese22.dan.maxpassusage.database;
+package com.dcalabrese22.dan.skipassusage.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.dcalabrese22.dan.maxpassusage.SkiArea;
+import com.dcalabrese22.dan.skipassusage.SkiArea;
 
 /**
  * Created by dan on 12/19/17.
@@ -76,5 +76,15 @@ public class DbOperations {
         int total = cursor.getInt(0);
         cursor.close();
         return total;
+    }
+
+    public Cursor queryPassesUsed() {
+        String[] columns = {DbContract.SkiAreaEntry.SKI_AREA_COLUMN_NAME,
+                DbContract.SkiAreaEntry.SKI_AREA_COLUMN_TIMES_GONE};
+        String selection = DbContract.SkiAreaEntry.SKI_AREA_COLUMN_TIMES_GONE + "!=?";
+        String[] args = {"0"};
+        String sort = DbContract.SkiAreaEntry.SKI_AREA_COLUMN_TIMES_GONE + " DESC";
+        return mDatabase.query(DbContract.SkiAreaEntry.SKI_AREA_TABLE, columns, selection,
+                args, null, null, sort);
     }
 }
