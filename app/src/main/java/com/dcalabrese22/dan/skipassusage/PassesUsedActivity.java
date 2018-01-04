@@ -1,9 +1,10 @@
 package com.dcalabrese22.dan.skipassusage;
 
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.dcalabrese22.dan.skipassusage.database.DbContract;
 import com.dcalabrese22.dan.skipassusage.database.DbOperations;
@@ -32,6 +33,12 @@ public class PassesUsedActivity extends AppCompatActivity {
             results.add(area);
         }
         cursor.close();
+
+        RecyclerView recyclerView = findViewById(R.id.rv_passes_used_list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        PassesUsedAdapter adapter = new PassesUsedAdapter(results);
+        recyclerView.setAdapter(adapter);
 
     }
 }
