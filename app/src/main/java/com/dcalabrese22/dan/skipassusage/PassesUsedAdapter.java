@@ -36,7 +36,7 @@ public class PassesUsedAdapter extends RecyclerView.Adapter<PassesUsedAdapter.Pa
         TextView passesUsed = holder.mPassesUsed;
         SkiArea area = mAreas.get(position);
         name.setText(area.getResortName());
-        passesUsed.setText(area.getTimesGone());
+        passesUsed.setText(String.valueOf(area.getTimesGone()));
     }
 
     @Override

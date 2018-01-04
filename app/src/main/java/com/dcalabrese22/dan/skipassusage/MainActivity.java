@@ -1,14 +1,19 @@
 package com.dcalabrese22.dan.skipassusage;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dcalabrese22.dan.skipassusage.database.DbOperations;
@@ -21,12 +26,20 @@ public class MainActivity extends AppCompatActivity implements SkiAreaClickHandl
     private TextView mTotalPassesUsed;
     private DbOperations mOperator;
     private Context mContext;
+    private LinearLayout mPassesUsedLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContext = this;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LocationService.PERMISSION_REQUEST_CODE);
+        }
 
         mOperator = new DbOperations(this);
         SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
@@ -45,10 +58,11 @@ public class MainActivity extends AppCompatActivity implements SkiAreaClickHandl
         mRecyclerView.setAdapter(mAdapter);
         mSearchView = findViewById(R.id.searchview);
         mTotalPassesUsed = findViewById(R.id.tv_total_passes_used);
+        mPassesUsedLayout = findViewById(R.id.ll_passes_used);
 
         mTotalPassesUsed.setText(String.valueOf(mOperator.getTotalPassesUsed()));
 
-        mTotalPassesUsed.setOnClickListener(new View.OnClickListener() {
+        mPassesUsedLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, PassesUsedActivity.class);
