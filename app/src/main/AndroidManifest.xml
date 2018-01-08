@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".DetailActivity" />
         <activity android:name=".PassesUsedActivity"></activity>
+
+        <service android:name=".LocationService"/>
     </application>
 
 </manifest>
