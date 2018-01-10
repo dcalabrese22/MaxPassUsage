@@ -118,7 +118,7 @@ public class ResortsBuilder {
     public static String[] getResortNames() {
         return resorts;
     }
-    public static double[][] getRestortLocations() {
+    public static double[][] getResortLocations() {
         return coordinates;
     }
 }

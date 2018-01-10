@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements SkiAreaClickHandl
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},
-                    LocationService.PERMISSION_REQUEST_CODE);
+                    SkiAreaLocationService.PERMISSION_REQUEST_CODE);
         }
 
         mOperator = new DbOperations(this);

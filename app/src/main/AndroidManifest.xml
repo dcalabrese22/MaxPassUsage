@@ -21,9 +21,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".DetailActivity" />
-        <activity android:name=".PassesUsedActivity"></activity>
+        <activity android:name=".PassesUsedActivity" />
 
-        <service android:name=".LocationService"/>
+        <service android:name=".LocationService" />
+        <service
+            android:name=".SkiAreaLocationService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
