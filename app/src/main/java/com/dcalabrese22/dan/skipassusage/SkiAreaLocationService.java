@@ -1,5 +1,7 @@
 package com.dcalabrese22.dan.skipassusage;
 
+import android.app.IntentService;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.location.Location;
@@ -14,10 +16,9 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-public class SkiAreaLocationService extends Service implements
+public class SkiAreaLocationService extends IntentService implements
         GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        GoogleApiClient.OnConnectionFailedListener {
 
     public static final long UPDATE_INTERVAL = 1000 * 60 * 45;
     public static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
@@ -25,42 +26,32 @@ public class SkiAreaLocationService extends Service implements
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;
+    private PendingIntent mPendingIntent;
 
-    private void buildGoogleApiClientAndLocationRequest() {
+    public SkiAreaLocationService(String name) {
+        super(name);
+    }
+
+    private void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
         mGoogleApiClient.connect();
+    }
+
+    private void createLocationRequest() {
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(UPDATE_INTERVAL);
         mLocationRequest.setFastestInterval(FASTEST_UPDATE_INTERVAL);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-    }
-
-    private void startLocationUpdates() {
-        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(
-                mLocationRequest,
-        );
-    }
-
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        buildGoogleApiClientAndLocationRequest();
-        return START_STICKY;
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
     }
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
 
+        LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates()
     }
 
     @Override
@@ -70,11 +61,10 @@ public class SkiAreaLocationService extends Service implements
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
     }
 
     @Override
-    public void onLocationChanged(Location location) {
+    protected void onHandleIntent(@Nullable Intent intent) {
 
     }
 }

@@ -164,7 +164,7 @@ public class LocationService extends Service implements LocationListener,
                             public void onSuccess(Void aVoid) {
                                 
                             }
-                        })
+                        });
             }
         }
     }
