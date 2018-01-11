@@ -3,7 +3,6 @@
     package="com.dcalabrese22.dan.skipassusage">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name=".database.DbApplication"
@@ -23,11 +22,19 @@
         <activity android:name=".DetailActivity" />
         <activity android:name=".PassesUsedActivity" />
 
-        <service android:name=".LocationService" />
         <service
             android:name=".SkiAreaLocationService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
+
+        <receiver
+            android:name="com.dcalabrese22.dan.maxpassusage.LocationChangedReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.dcalabrese22.dan.LocationChangedReceiver.NEW_LOCATION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

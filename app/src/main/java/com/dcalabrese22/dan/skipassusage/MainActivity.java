@@ -1,13 +1,9 @@
 package com.dcalabrese22.dan.skipassusage;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,12 +30,8 @@ public class MainActivity extends AppCompatActivity implements SkiAreaClickHandl
         setContentView(R.layout.activity_main);
         mContext = this;
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[] {Manifest.permission.ACCESS_COARSE_LOCATION},
-                    SkiAreaLocationService.PERMISSION_REQUEST_CODE);
-        }
+        Intent serviceIntent = new Intent(this, SkiAreaLocationService.class);
+        startService(serviceIntent);
 
         mOperator = new DbOperations(this);
         SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
