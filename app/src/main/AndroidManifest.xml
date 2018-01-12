@@ -28,7 +28,7 @@
             android:exported="true" />
 
         <receiver
-            android:name="com.dcalabrese22.dan.maxpassusage.LocationChangedReceiver"
+            android:name=".LocationChangedReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

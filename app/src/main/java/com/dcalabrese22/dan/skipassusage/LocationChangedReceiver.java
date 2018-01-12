@@ -1,4 +1,4 @@
-package com.dcalabrese22.dan.maxpassusage;
+package com.dcalabrese22.dan.skipassusage;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -7,11 +7,14 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.dcalabrese22.dan.skipassusage.MainActivity;
 import com.dcalabrese22.dan.skipassusage.R;
+import com.google.android.gms.location.LocationResult;
 
 public class LocationChangedReceiver extends BroadcastReceiver {
 
@@ -20,10 +23,15 @@ public class LocationChangedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String action = intent.getAction();
-        if (action.equals(INTENT_FILTER)) {
-            showNotification(context, buildNotificationIntent(context));
+        LocationResult locationResult = LocationResult.extractResult(intent);
+        if (locationResult != null) {
+            Location location = locationResult.getLastLocation();
+            double lat = location.getLatitude();
+            double longitude = location.getLongitude();
+            String ladAndLong = String.valueOf(lat + "," + longitude);
+            Toast.makeText(context, ladAndLong, Toast.LENGTH_LONG).show();
         }
+        showNotification(context, buildNotificationIntent(context));
     }
 
     private PendingIntent buildNotificationIntent(Context context) {

@@ -1,27 +1,29 @@
 package com.dcalabrese22.dan.skipassusage;
 
 import android.Manifest;
-import android.app.IntentService;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.dcalabrese22.dan.maxpassusage.LocationChangedReceiver;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-public class SkiAreaLocationService extends IntentService implements
+public class SkiAreaLocationService extends Service implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
-    public static final long UPDATE_INTERVAL = 1000 * 60 * 45;
+    public static final long UPDATE_INTERVAL = 1000 * 60 * 1;
     public static final long FASTEST_UPDATE_INTERVAL = UPDATE_INTERVAL / 2;
     public static Boolean mIsRequestingUpdates;
     private GoogleApiClient mGoogleApiClient;
@@ -29,9 +31,6 @@ public class SkiAreaLocationService extends IntentService implements
     private Location mCurrentLocation;
     private PendingIntent mPendingIntent;
 
-    public SkiAreaLocationService(String name) {
-        super(name);
-    }
 
     private void buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -65,6 +64,25 @@ public class SkiAreaLocationService extends IntentService implements
         }
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("On start command", "Called");
+        buildGoogleApiClient();
+        createLocationRequest();
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "no permissions", Toast.LENGTH_SHORT).show();
+        }else {
+            Intent receiverIntent = new Intent(this, LocationChangedReceiver.class);
+            intent.setAction(LocationChangedReceiver.INTENT_FILTER);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
+                    PENDING_INTENT_REQUEST_CODE, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(
+                    mLocationRequest, pendingIntent);
+        }
+        return START_STICKY;
+    }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -75,8 +93,9 @@ public class SkiAreaLocationService extends IntentService implements
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
     }
 
+    @Nullable
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
-
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 }
