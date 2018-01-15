@@ -1,8 +1,10 @@
 package com.dcalabrese22.dan.skipassusage;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -18,6 +20,9 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.util.Calendar;
 
 public class SkiAreaLocationService extends Service implements
         GoogleApiClient.ConnectionCallbacks,
@@ -30,6 +35,7 @@ public class SkiAreaLocationService extends Service implements
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;
     private PendingIntent mPendingIntent;
+    private Context mContext;
 
 
     private void buildGoogleApiClient() {
@@ -49,12 +55,13 @@ public class SkiAreaLocationService extends Service implements
     }
 
     public static final int PENDING_INTENT_REQUEST_CODE = 13;
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
+                != PackageManager.PERMISSION_GRANTED) {
             return;
-        }else {
+        } else {
             Intent intent = new Intent(this, LocationChangedReceiver.class);
             intent.setAction(LocationChangedReceiver.INTENT_FILTER);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
@@ -69,16 +76,32 @@ public class SkiAreaLocationService extends Service implements
         Log.d("On start command", "Called");
         buildGoogleApiClient();
         createLocationRequest();
+        mContext = this;
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "no permissions", Toast.LENGTH_SHORT).show();
-        }else {
-            Intent receiverIntent = new Intent(this, LocationChangedReceiver.class);
-            intent.setAction(LocationChangedReceiver.INTENT_FILTER);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                    PENDING_INTENT_REQUEST_CODE, receiverIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(
-                    mLocationRequest, pendingIntent);
+        } else {
+            LocationServices.getFusedLocationProviderClient(this).getLastLocation()
+                    .addOnSuccessListener(new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                Intent receiverIntent = new Intent(mContext,
+                                        LocationChangedReceiver.class);
+                                receiverIntent.putExtra("location", location);
+                                receiverIntent.setAction(LocationChangedReceiver.INTENT_FILTER);
+                                PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext,
+                                        PENDING_INTENT_REQUEST_CODE, receiverIntent,
+                                        PendingIntent.FLAG_UPDATE_CURRENT);
+                                Calendar calendar = Calendar.getInstance();
+                                long interval = 60 * 60 * 2 * 1000;
+                                AlarmManager alarmManager = (AlarmManager)
+                                        getSystemService(Context.ALARM_SERVICE);
+                                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                                        calendar.getTimeInMillis(), interval, pendingIntent);
+                            }
+                        }
+                    });
         }
         return START_STICKY;
     }
